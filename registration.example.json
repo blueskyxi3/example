@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "modules": [
+    {
+      "manifest": {
+        "id": "example",
+        "name": "插件示例",
+        "version": "1.0.2",
+        "sdk_version": 2,
+        "extensions": [
+          "site.navigation",
+          "relay.request.intercept",
+          "relay.response.intercept"
+        ],
+        "entry": "/assets/plugin.js"
+      },
+      "mode": "external",
+      "url": "http://127.0.0.1:3012",
+      "host_url": "http://127.0.0.1:3000",
+      "data_host_url": "http://127.0.0.1:3001",
+      "secret": "REPLACE_WITH_EXAMPLE_HOST_SECRET_AT_LEAST_32_CHARS",
+      "enabled": true,
+      "status": "installed"
+    }
+  ],
+  "licenses": {
+    "example": {
+      "kind": "purchase",
+      "started_at": 0,
+      "trial_used": false
+    }
+  }
+}

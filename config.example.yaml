@@ -1,0 +1,18 @@
+plugin:
+  id: example
+server:
+  address: 127.0.0.1:3012
+host:
+  # Both master and slave registrations must use this SAME master callback.
+  base_url: http://127.0.0.1:3000
+  data_base_url: http://127.0.0.1:3000
+  secret: ""
+database:
+  mode: independent
+  driver: sqlite
+  sqlite_path: ./data/example.db
+  sqlite_busy_timeout: 3000
+rules:
+  request_blocked: []
+  request_replacements: []
+  response_replacements: []

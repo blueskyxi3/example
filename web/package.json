@@ -1,0 +1,8 @@
+{
+  "name": "ai-hub-example-web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "build": "vite build", "test": "node --test src/*.test.mjs" },
+  "devDependencies": { "vite": "7.1.11" }
+}

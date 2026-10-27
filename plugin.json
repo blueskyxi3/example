@@ -1,0 +1,12 @@
+{
+  "id": "example",
+  "name": "插件示例",
+  "version": "1.0.2",
+  "sdk_version": 2,
+  "extensions": [
+    "site.navigation",
+    "relay.request.intercept",
+    "relay.response.intercept"
+  ],
+  "entry": "/assets/plugin.js"
+}
