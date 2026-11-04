@@ -23,11 +23,15 @@ if catalog["manifest"]["version"] != old_version or registration["modules"][0]["
 manifest["version"] = version
 catalog["manifest"]["version"] = version
 registration["modules"][0]["manifest"]["version"] = version
-for platform, path in catalog["packages"].items():
-    expected = f"example-{old_version}-{platform}.zip"
+for platform, path in catalog["artifacts"].items():
+    expected = f"/{old_version}/example-{old_version}-{platform}.zip"
     if not path.endswith(expected):
-        raise SystemExit(f"目录中的 {platform} 插件包路径与当前版本不一致")
-    catalog["packages"][platform] = path[: -len(expected)] + f"example-{version}-{platform}.zip"
+        raise SystemExit(f"目录中的 {platform} 插件包地址与当前版本不一致")
+    catalog["artifacts"][platform] = path[: -len(expected)] + f"/{version}/example-{version}-{platform}.zip"
+
+container = catalog.get("container")
+if container and container.get("image", "").endswith(f":{old_version}"):
+    container["image"] = container["image"][: -len(old_version)] + version
 
 for path, data in ((manifest_path, manifest), (catalog_path, catalog), (registration_path, registration)):
     if version != old_version:

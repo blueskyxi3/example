@@ -30,9 +30,10 @@ RUN apk add --no-cache ca-certificates tzdata && \
     mkdir -p /data/plugin && chown 10001:10001 /data/plugin
 COPY --from=backend /build/example/dist/example /usr/local/bin/example
 COPY --chown=10001:10001 config.example.yaml /data/plugin/config.yaml
+COPY --chmod=755 deploy/entrypoint.sh /usr/local/bin/example-entrypoint
 WORKDIR /data/plugin
 ENV EXAMPLE_SERVER_ADDRESS=0.0.0.0:3012
 USER 10001:10001
 EXPOSE 3012
-ENTRYPOINT ["/usr/local/bin/example"]
+ENTRYPOINT ["/usr/local/bin/example-entrypoint"]
 CMD ["-config", "/data/plugin/config.yaml"]

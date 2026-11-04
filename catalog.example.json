@@ -2,7 +2,7 @@
   "manifest": {
     "id": "example",
     "name": "插件示例",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "sdk_version": 2,
     "extensions": [
       "site.navigation",
@@ -11,22 +11,29 @@
     ],
     "entry": "/assets/plugin.js"
   },
-  "description": "请求拒绝与替换、原始渠道 JSON/SSE 文本脱敏、执行记录页面。完整演示使用 master＋slave 连接同一个 external 服务。",
+  "description": "请求拒绝与替换、原始渠道 JSON/SSE 文本脱敏、执行记录页面。完整演示使用 master＋slave 连接同一个插件服务。",
   "logo": "https://raw.githubusercontent.com/blueskyxi3/example/main/plugin-logos/example.svg",
   "background": "https://raw.githubusercontent.com/blueskyxi3/example/main/plugin-backgrounds/example.png",
   "modes": [
     "process",
-    "external"
+    "external",
+    "docker",
+    "kubernetes"
   ],
-  "packages": {
-    "darwin-arm64": "../example/dist/example-1.0.3-darwin-arm64.zip",
-    "linux-amd64": "../example/dist/example-1.0.3-linux-amd64.zip",
-    "linux-arm64": "../example/dist/example-1.0.3-linux-arm64.zip"
+  "container": {
+    "image": "ctt-repository-cn-guangzhou.cr.volces.com/compute-power-zone/ai-hub-example:1.0.4",
+    "port": 3012,
+    "health_path": "/healthz"
   },
   "trial_days": 7,
   "purchase_days": 0,
   "env_prefix": "EXAMPLE",
   "external_url": "",
   "secret_env": "EXAMPLE_HOST_SECRET",
-  "rollback_compatible": false
+  "rollback_compatible": false,
+  "artifacts": {
+    "darwin-arm64": "https://github.com/blueskyxi3/example/releases/download/1.0.4/example-1.0.4-darwin-arm64.zip",
+    "linux-amd64": "https://github.com/blueskyxi3/example/releases/download/1.0.4/example-1.0.4-linux-amd64.zip",
+    "linux-arm64": "https://github.com/blueskyxi3/example/releases/download/1.0.4/example-1.0.4-linux-arm64.zip"
+  }
 }
