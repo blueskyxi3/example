@@ -2,7 +2,7 @@
   "manifest": {
     "id": "example",
     "name": "插件示例",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "sdk_version": 2,
     "extensions": [
       "site.navigation",
@@ -12,15 +12,16 @@
     "entry": "/assets/plugin.js"
   },
   "description": "请求拒绝与替换、原始渠道 JSON/SSE 文本脱敏、执行记录页面。完整演示使用 master＋slave 连接同一个 external 服务。",
-  "logo": "/plugin-logos/example.svg",
+  "logo": "https://raw.githubusercontent.com/blueskyxi3/example/main/plugin-logos/example.svg",
+  "background": "https://raw.githubusercontent.com/blueskyxi3/example/main/plugin-backgrounds/example.png",
   "modes": [
     "process",
     "external"
   ],
   "packages": {
-    "darwin-arm64": "../example/dist/example-1.0.2-darwin-arm64.zip",
-    "linux-amd64": "../example/dist/example-1.0.2-linux-amd64.zip",
-    "linux-arm64": "../example/dist/example-1.0.2-linux-arm64.zip"
+    "darwin-arm64": "../example/dist/example-1.0.3-darwin-arm64.zip",
+    "linux-amd64": "../example/dist/example-1.0.3-linux-amd64.zip",
+    "linux-arm64": "../example/dist/example-1.0.3-linux-arm64.zip"
   },
   "trial_days": 7,
   "purchase_days": 0,

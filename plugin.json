@@ -1,7 +1,7 @@
 {
   "id": "example",
   "name": "插件示例",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "sdk_version": 2,
   "extensions": [
     "site.navigation",

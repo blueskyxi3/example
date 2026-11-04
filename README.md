@@ -24,9 +24,27 @@ make build
 make test
 ```
 
-构建新版本时运行 `make build VERSION=1.0.2`。构建前会同步更新 `plugin.json`、`catalog.example.json` 和 `registration.example.json` 中的版本及目录包路径；不传 `VERSION` 时沿用当前版本。构建后仍需将更新后的目录记录提交到宿主的插件目录。
+构建新版本时运行 `make build VERSION=1.0.3`。构建前会同步更新 `plugin.json`、`catalog.example.json` 和 `registration.example.json` 中的版本及目录包路径；不传 `VERSION` 时沿用当前版本。构建后仍需将更新后的目录记录提交到宿主的插件目录。
 
 `dist/example-<VERSION>-<GOOS>-<GOARCH>.zip` 是原生 process 安装包：根目录包含 `example`、`plugin.json`、`config.yaml`，前端嵌入可执行文件。必须在目标平台原生构建，SQLite 使用 CGO。本插件是独立 HTTP 程序，无需 Go `.so` ABI。目录样例的 `packages` 路径按同级 AI Hub 仓库根目录作为工作目录填写；若宿主从其他目录启动，请改为绝对路径。复制 `catalog.example.json` 中的目录记录到宿主插件目录，通过插件市场安装和授权；原生安装默认空规则，改配置后重启服务才生效。master 上的 process 插件会处理发往 master 的文本模型请求并记录两个拦截阶段。升级时原有密钥和数据库配置保留。
+
+## 容器与 Linux 安装包
+
+从本项目根目录构建，使用同级 AI Hub 中的独立 SDK 作为额外构建上下文。每个 Linux 架构在对应平台的 builder 中编译，保留 SQLite CGO 并使用静态 musl 链接：
+
+```sh
+docker buildx build --platform linux/amd64,linux/arm64 \
+  --build-context pluginapi=../ai-hub/common/pluginapi \
+  -t ctt-repository-cn-guangzhou.cr.volces.com/compute-power-zone/ai-hub-example:1.0.3 \
+  --push .
+docker buildx build --platform linux/amd64,linux/arm64 \
+  --build-context pluginapi=../ai-hub/common/pluginapi \
+  --target release-export --output type=local,dest=dist,platform-split=false .
+```
+
+镜像以 UID/GID `10001` 运行，默认监听 `0.0.0.0:3012`，读取 `/data/plugin/config.yaml`。通过 `EXAMPLE_HOST_SECRET` 设置通信密钥；使用 `EXAMPLE_HOST_BASE_URL`、`EXAMPLE_HOST_DATA_BASE_URL` 指定容器可访问的宿主地址。SQLite 默认保存在 `/data/plugin/data/example.db`，部署时持久化 `/data/plugin`。该 HTTP 服务可以通过宿主的 external 模式接入。
+
+插件市场图片保存在 `plugin-logos/example.svg` 和 `plugin-backgrounds/example.png`，目录中的 `logo`、`background` 使用本仓库的公开 HTTPS 地址。发布附件 `catalog.json` 使用同版本的公开 ZIP 下载地址，已有目录项需要显式更新后生效。
 
 ## master＋slave 共用同一个插件服务
 
@@ -89,7 +107,7 @@ go test ./... -count=1
 (cd web && npm test && npm run build)
 # 原生包构建后，在同级 AI Hub 仓库根目录执行真实安装／重启＋external 数据面测试
 cd ../ai-hub
-AI_HUB_EXAMPLE_TEST_PACKAGE="$PWD/../example/dist/example-1.0.2-$(go env GOOS)-$(go env GOARCH).zip" \
+AI_HUB_EXAMPLE_TEST_PACKAGE="$PWD/../example/dist/example-1.0.3-$(go env GOOS)-$(go env GOARCH).zip" \
   go test ./controller -run '^TestMarketplaceNativeExample' -count=1
 ```
 

@@ -1,0 +1,7 @@
+.git
+.gitnexus
+dist
+web/node_modules
+web/build
+data
+config.yaml
