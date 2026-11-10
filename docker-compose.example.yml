@@ -1,0 +1,29 @@
+services:
+  example:
+    image: ctt-repository-cn-guangzhou.cr.volces.com/compute-power-zone/ai-hub-example:1.0.3
+    restart: unless-stopped
+    environment:
+      EXAMPLE_HOST_SECRET: ${EXAMPLE_HOST_SECRET:?set EXAMPLE_HOST_SECRET in .env}
+      EXAMPLE_HOST_BASE_URL: ${EXAMPLE_HOST_BASE_URL:-http://ai-hub:3000}
+      EXAMPLE_HOST_DATA_BASE_URL: ${EXAMPLE_HOST_DATA_BASE_URL:-http://ai-hub:3000}
+      GIN_MODE: release
+    ports:
+      - "${EXAMPLE_BIND_ADDRESS:-127.0.0.1}:${EXAMPLE_PUBLISHED_PORT:-3012}:3012"
+    volumes:
+      - example-data:/data/plugin
+    networks:
+      - aihub
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3012/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  example-data:
+
+networks:
+  aihub:
+    external: true
+    name: ${AIHUB_DOCKER_NETWORK:-aihub}

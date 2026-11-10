@@ -129,10 +129,10 @@ function RecordsPage() {
 
   return <Box sx={{ width: "100%", maxWidth: 1440, mx: "auto", p: { xs: 2, md: 3 } }}>
     <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
-      <Typography variant="h4">{t("title")}</Typography>
+      <Typography variant="h3">{t("title")}</Typography>
       <Typography variant="caption" color="text.secondary">{t("scope")}: {t(data.admin ? "admin" : "own")}</Typography>
     </Stack>
-    <Stack direction="row" alignItems="center" useFlexGap flexWrap="wrap" spacing={1} sx={{ mb: 2, "& .MuiInputBase-root": { height: 36, minHeight: 36 }, "& .MuiInputBase-input": { py: 0 } }}>
+    <Stack direction="row" alignItems="center" useFlexGap flexWrap="wrap" spacing={1} sx={{ mb: 2, "& .MuiInputBase-root": { height: "var(--app-control-height, 32px)", minHeight: "var(--app-control-height, 32px)" }, "& .MuiInputBase-input": { py: 0 } }}>
       <TextField size="small" placeholder={t("requestID")} inputProps={{ "aria-label": t("requestID") }} value={draft.request_id} onChange={(e) => setDraft({ ...draft, request_id: e.target.value })} sx={{ minWidth: 220, flex: "1 1 220px" }} />
       <TextField select size="small" value={draft.point} onChange={(e) => setDraft({ ...draft, point: e.target.value })} SelectProps={{ displayEmpty: true, inputProps: { "aria-label": t("point") } }} sx={{ minWidth: 180 }}>
         <MenuItem value="">{t("point")}: {t("all")}</MenuItem>
@@ -143,7 +143,7 @@ function RecordsPage() {
         {["running", "completed", "error", "canceled"].map((value) => <MenuItem key={value} value={value}>{statusName(value, t)}</MenuItem>)}
       </TextField>
       {["from", "to"].map((name) => <TextField key={name} size="small" type="datetime-local" placeholder={t(name)} inputProps={{ "aria-label": t(name), title: t(name) }} value={draft[name]} onChange={(e) => setDraft({ ...draft, [name]: e.target.value })} sx={{ minWidth: 190 }} />)}
-      <Button variant="outlined" size="small" sx={{ height: 36, minHeight: 36 }} onClick={() => apply(draft)}>{t("search")}</Button>
+      <Button variant="outlined" size="small" sx={{ height: "var(--app-control-height, 32px)", minHeight: "var(--app-control-height, 32px)" }} onClick={() => apply(draft)}>{t("search")}</Button>
     </Stack>
     <Box sx={{ minHeight: 42 }}>{error && <Alert severity="error">{error}</Alert>}</Box>
     <PluginLoading loading={loading} hasData={hasRecords} error={error} onRetry={() => setRefresh((v) => v + 1)} skeleton={false}><TableContainer sx={{ border: 1, borderColor: "divider", borderRadius: 1 }}>

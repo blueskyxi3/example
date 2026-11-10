@@ -12,8 +12,8 @@
     "entry": "/assets/plugin.js"
   },
   "description": "请求拒绝与替换、原始渠道 JSON/SSE 文本脱敏、执行记录页面。完整演示使用 master＋slave 连接同一个插件服务。",
-  "logo": "https://raw.githubusercontent.com/blueskyxi3/example/main/plugin-logos/example.svg",
-  "background": "https://raw.githubusercontent.com/blueskyxi3/example/main/plugin-backgrounds/example.png",
+  "logo": "https://ai-hub-bucket-1.tos-cn-beijing.volces.com/plugins/example/logo-e7186e0ec36c53c7.svg",
+  "background": "https://ai-hub-bucket-1.tos-cn-beijing.volces.com/plugins/example/background-bfd18691626ee5a3.png",
   "modes": [
     "process",
     "external",

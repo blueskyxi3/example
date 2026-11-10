@@ -1,0 +1,120 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ai-hub-example-data
+  namespace: compute-power-zone
+spec:
+  accessModes:
+    - ReadWriteOnce
+  # 改为实际存储类；使用集群默认存储类时删除此行。
+  storageClassName: ebs-ssd
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-hub-example
+  namespace: compute-power-zone
+spec:
+  selector:
+    app.kubernetes.io/name: ai-hub-example
+  ports:
+    - name: http
+      port: 3012
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-hub-example
+  namespace: compute-power-zone
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ai-hub-example
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ai-hub-example
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        fsGroupChangePolicy: OnRootMismatch
+      imagePullSecrets:
+        - name: cr-ctt-repository-cn-guangzhou
+      initContainers:
+        # PVC 会遮住镜像自带的配置；首次启动复制一份可写配置，保留已有配置。
+        - name: init-config
+          image: ctt-repository-cn-guangzhou.cr.volces.com/compute-power-zone/ai-hub-example:1.0.3
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -ec
+            - |
+              if [ ! -f /persist/config.yaml ]; then
+                cp /data/plugin/config.yaml /persist/config.yaml
+              fi
+          volumeMounts:
+            - name: example-data
+              mountPath: /persist
+      containers:
+        - name: example
+          image: ctt-repository-cn-guangzhou.cr.volces.com/compute-power-zone/ai-hub-example:1.0.3
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3012
+          env:
+            - name: EXAMPLE_HOST_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: ai-hub-example
+                  key: EXAMPLE_HOST_SECRET
+            - name: EXAMPLE_HOST_BASE_URL
+              # 改为 master Service 的实际地址。
+              value: http://ai-hub-web:3000
+            - name: EXAMPLE_HOST_DATA_BASE_URL
+              value: http://ai-hub-web:3000
+            - name: GIN_MODE
+              value: release
+          volumeMounts:
+            - name: example-data
+              mountPath: /data/plugin
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 30
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 20
+            timeoutSeconds: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: "1"
+              memory: 512Mi
+      volumes:
+        - name: example-data
+          persistentVolumeClaim:
+            claimName: ai-hub-example-data
