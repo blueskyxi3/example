@@ -51,11 +51,9 @@ cat ~/work/example/data/.env.local-debug
 
 ## 5 在宿主连接插件
 
-进入 TiTu Edge 的“插件市场”，找到“插件示例”，选择安装或试用。
+进入“插件管理 → 插件目录”，使用本项目 [catalog.example.json](catalog.example.json) 的完整内容登记或更新“插件示例”，并保存。
 
-如果市场里没有“插件示例”，先进入“插件管理 → 插件目录 → 登记插件”，粘贴本项目 [catalog.example.json](catalog.example.json) 的完整内容并保存。
-
-安装时填写：
+再进入“插件市场”，找到“插件示例”，选择安装或试用，安装模式选“外部服务 external”。下面三个地址会自动填入，只需填写通信密钥 Secret：
 
 | 字段 | 填写内容 |
 | --- | --- |

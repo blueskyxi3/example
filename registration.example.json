@@ -17,7 +17,7 @@
       "mode": "external",
       "url": "http://127.0.0.1:3012",
       "host_url": "http://127.0.0.1:3000",
-      "data_host_url": "http://127.0.0.1:3001",
+      "data_host_url": "http://127.0.0.1:3000",
       "secret": "REPLACE_WITH_EXAMPLE_HOST_SECRET_AT_LEAST_32_CHARS",
       "enabled": true,
       "status": "installed"

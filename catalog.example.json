@@ -28,7 +28,9 @@
   "trial_days": 7,
   "purchase_days": 0,
   "env_prefix": "EXAMPLE",
-  "external_url": "",
+  "external_url": "http://127.0.0.1:3012",
+  "host_url": "http://127.0.0.1:3000",
+  "data_host_url": "http://127.0.0.1:3000",
   "secret_env": "EXAMPLE_HOST_SECRET",
   "rollback_compatible": false,
   "artifacts": {
