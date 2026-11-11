@@ -2,7 +2,7 @@
   "manifest": {
     "id": "example",
     "name": "插件示例",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "sdk_version": 2,
     "extensions": [
       "site.navigation",
@@ -21,7 +21,7 @@
     "kubernetes"
   ],
   "container": {
-    "image": "ctt-repository-cn-guangzhou.cr.volces.com/compute-power-zone/ai-hub-example:1.0.4",
+    "image": "ctt-repository-cn-guangzhou.cr.volces.com/compute-power-zone/ai-hub-example:1.0.5",
     "port": 3012,
     "health_path": "/healthz"
   },
@@ -32,8 +32,8 @@
   "secret_env": "EXAMPLE_HOST_SECRET",
   "rollback_compatible": false,
   "artifacts": {
-    "darwin-arm64": "https://github.com/blueskyxi3/example/releases/download/1.0.4/example-1.0.4-darwin-arm64.zip",
-    "linux-amd64": "https://github.com/blueskyxi3/example/releases/download/1.0.4/example-1.0.4-linux-amd64.zip",
-    "linux-arm64": "https://github.com/blueskyxi3/example/releases/download/1.0.4/example-1.0.4-linux-arm64.zip"
+    "darwin-arm64": "https://github.com/blueskyxi3/example/releases/download/1.0.5/example-1.0.5-darwin-arm64.zip",
+    "linux-amd64": "https://github.com/blueskyxi3/example/releases/download/1.0.5/example-1.0.5-linux-amd64.zip",
+    "linux-arm64": "https://github.com/blueskyxi3/example/releases/download/1.0.5/example-1.0.5-linux-arm64.zip"
   }
 }

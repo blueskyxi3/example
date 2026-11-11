@@ -29,7 +29,7 @@ async function request(path, config = {}) {
 }
 
 export function topNavigation() {
-  return [{ id: "records", title: translate("title"), url: "/plugins/example", icon: "tabler:plug-connected", before: "about" }];
+  return [{ id: "records", title: translate("title"), url: "/plugins/example", icon: "tabler:list-details", before: "about" }];
 }
 
 function Payload({ record, name, t }) {

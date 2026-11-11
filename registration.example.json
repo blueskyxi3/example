@@ -5,7 +5,7 @@
       "manifest": {
         "id": "example",
         "name": "插件示例",
-        "version": "1.0.4",
+        "version": "1.0.5",
         "sdk_version": 2,
         "extensions": [
           "site.navigation",
